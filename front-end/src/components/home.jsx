@@ -1,5 +1,5 @@
 import React from 'react'
-
+import image from "../images/book.jpg"
 export default function Home() {
   return (
     <div>
@@ -27,6 +27,35 @@ export default function Home() {
             </div>
         </div>
     </nav>
+
+
+    <div class="noti">
+
+<h1 style={{marginTop : "80px"}} > NOTIFICATION</h1>
+<div class="box1 container" style={{marginTop : "60px"}} >
+
+    <div class="row">
+
+      <div class="col-3">
+      <div class="x">
+
+      </div>
+
+      </div>
+      <div class="col-9">
+        <div class="y">
+          <p>id : 5883118</p>
+          <p>Name : Apple</p>
+          <p>Problem : Spoilage</p>
+          <p>Time Elapsed : 5883118</p>
+
+        </div>
+      </div>
+      
+    </div>
+
+</div>
+</div>
 
 
     </div>
