@@ -1,9 +1,10 @@
 import React from 'react'
 import image from "../images/book.jpg"
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import axios from 'axios';
+import "./home.css"
 export default function Home() {
-  let id=useParams().id
-  console.log(id)
   return (
     <div>
  
@@ -21,7 +22,7 @@ export default function Home() {
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Cart</a>
+                        <a class="nav-link active" aria-current="page" href="/cart">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  LOGOUT</a>
@@ -32,10 +33,15 @@ export default function Home() {
     </nav>
 
 
-    <div class="noti">
+    <div class="noti container">
 
-<h1 style={{marginTop : "80px"}} > NOTIFICATION</h1>
-<div class="box1 container" style={{marginTop : "60px"}} >
+
+
+{
+                data.map((item,index)=>{
+                    return(
+
+                      <div class="box1 " style={{marginTop : "60px"}} >
 
     <div class="row">
 
@@ -46,18 +52,49 @@ export default function Home() {
 
       </div>
       <div class="col-9">
-        <div class="y">
-          <p>id : 5883118</p>
-          <p>Name : Apple</p>
-          <p>Problem : Spoilage</p>
-          <p>Time Elapsed : 5883118</p>
+        <div class="y ">
 
+          <div className="row jus">
+          <div className="col">
+          <p>Name : {item.book_name}</p>
+          <p>Author : {item.author_name}</p>
+          </div>
+
+          <div className="col">
+          <p>Genre : {item.genre}</p>
+          <p>Year : {item.published_year}</p>
+          <button type="button" onClick={()=>{
+            addToCart(item.book_id);
+          }} class="btncrt btn btn-primary ">Add to cart</button>
+          </div>
+
+          
+
+          <div className="col">
+          <p>Quantity : {item.quantity}</p>
+          <p>Price : $10</p>
+          </div>
+          
+
+
+          </div>
+          
+          
+          
+     
+        
         </div>
       </div>
       
     </div>
 
 </div>
+                        
+                    )
+                })
+            }
+
+
 </div>
 
 
