@@ -84,7 +84,7 @@
     
     position: relative;
     width: 1260px;
-    height: 255px;
+    height: 220px;
     margin-left: 0;
         
     background: rgba(217, 217, 217, 0.48);
@@ -103,7 +103,7 @@
 }
 .y{
    
-    width: 260px;
+    width: 100%;
     height: 186px;
     
     margin-top: 35px;

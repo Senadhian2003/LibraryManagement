@@ -24,7 +24,7 @@ function App() {
         <Route path='/cart' Component={Cart} />
 
       </Routes>
-
+ 
     </Router>
   );
 }
