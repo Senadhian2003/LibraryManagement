@@ -6,6 +6,7 @@ import Home from './components/home';
 import Cart from './components/cart';
 import Login from './components/login';
 import Signup from './components/signup';
+import Password from './components/Password';
 
 
 function App() {
@@ -17,10 +18,11 @@ function App() {
       <Routes>
 
         <Route path='/login' Component={Login} />
-        <Route path='/view/:id' Component={Signup} />
+        <Route path='/signup' Component={Signup} />
+        <Route path='/password' Component={Password} />
 
 
-        <Route path='/' Component={Home} />
+        <Route path='/:id' Component={Home} />
         <Route path='/cart' Component={Cart} />
 
       </Routes>

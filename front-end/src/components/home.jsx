@@ -1,6 +1,9 @@
 import React from 'react'
 import image from "../images/book.jpg"
+import { useParams } from 'react-router-dom'
 export default function Home() {
+  let id=useParams().id
+  console.log(id)
   return (
     <div>
  
