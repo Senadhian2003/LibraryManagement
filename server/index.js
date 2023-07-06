@@ -10,6 +10,17 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 
 app.get("/get",(req,res)=>{
+    res.send("Goood");
+}) 
+
+app.use('/auth',auth);
+
+
+
+
+
+
+app.get("/",(req,res)=>{
 
     res.send("Goood");
 
@@ -90,9 +101,6 @@ app.post("/deletefromcart",(req,res)=>{
     console.log(user_id, book_id)
 
 })
-
-
-
 
 
 app.listen(5000,()=>{

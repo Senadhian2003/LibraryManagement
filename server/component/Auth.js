@@ -1,4 +1,4 @@
-const mysql=require('mysql2');
+
 var express = require('express');
 const db = require('../connection');
 var router = express.Router();
