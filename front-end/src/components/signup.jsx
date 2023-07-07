@@ -34,14 +34,14 @@ function Signup() {
 
   }
   const reject=(msg)=>{
-    alert(`error + ${msg}`)
+   console.log(msg)
 
   }
   function handlesubmit(e){
     e.preventDefault();
   }
  function submitdata(){
-  axios.post("http://localhost:5000/auth/signup",{
+  axios.post("https://library-management-backend-one.vercel.app/auth/signup",{
     params: {
       name:name,
       mail:mail,
@@ -50,7 +50,7 @@ function Signup() {
       password:password
     }
   }).then((response) => {
-    navigate("/login")
+    navigate("/")
     
 }).catch((msg)=>{
   alert("invalid username or password")
@@ -76,7 +76,7 @@ function Signup() {
           <input
             type="text"
             className="form-control mt-1"
-            placeholder="Enter email"
+            placeholder="Enter Name"
             onChange={(e)=>sname(e.target.value)}
             value={name}
           />
@@ -107,7 +107,7 @@ function Signup() {
        
  
   <div className="d-grid gap-2 mt-3">
-          <button type="submit" onClick={()=>{navigate("/login")}} style={{marginBottom:"10%"}}className="btn btn-primary">
+          <button type="submit" onClick={()=>{navigate("/")}} style={{marginBottom:"10%"}}className="btn btn-primary">
             Login
           </button> 
           <GoogleLogin

@@ -15,7 +15,7 @@ export default function Cart() {
   let totalPrice = 0;
   const loadData = async()=>{
 
-    axios.get("http://localhost:5000/getcartdetails",{
+    axios.get("https://library-management-backend-one.vercel.app/getcartdetails",{
         params: {
         user_id : S.id
         }
@@ -39,7 +39,7 @@ export default function Cart() {
     var user_id=S.id;
     console.log(book_id);
 
-    axios.post("http://localhost:5000/deletefromcart",{
+    axios.post("https://library-management-backend-one.vercel.app/deletefromcart",{
                 user_id : user_id,
                 book_id : book_id,
                 
@@ -60,7 +60,7 @@ export default function Cart() {
 
   const checkout = ()=>{
 
-    axios.post("http://localhost:5000/checkout",{
+    axios.post("https://library-management-backend-one.vercel.app/checkout",{
       booksArr : data,
       user_id : S.id
   }).then(()=>{
@@ -68,7 +68,7 @@ export default function Cart() {
 
       toast.success("Cart checked out successfully");
         setTimeout(()=>{
-          navigate(`/${S.id}`)
+          navigate(`/home/${S.id}`)
         },1000);
 
       
@@ -96,7 +96,7 @@ export default function Cart() {
                     
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" onClick={()=>{
-                          navigate(`/${S.id}`)
+                          navigate(`/home/${S.id}`)
                         }}>Home</a>
                     </li>
                     <li class="nav-item">
@@ -105,7 +105,9 @@ export default function Cart() {
                         }}>Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  LOGOUT</a>
+                        <a class="nav-link active" aria-current="page" onClick={()=>{
+                          navigate(`/`)
+                        }}><img src="30.png" alt=""/>  LOGOUT</a>
                     </li>
                 </ul>
             </div>

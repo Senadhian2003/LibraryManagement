@@ -6,6 +6,9 @@ import axios from 'axios';
 import "./home.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import Preloader from "./preloder"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +17,8 @@ import Slider from '@material-ui/core/Slider';
 
 export default function Home() {
   let S = useParams();
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [price, setPrice] =  useState([0,100]);
@@ -27,7 +32,7 @@ export default function Home() {
   const loadData = async()=>{
 
     try {
-      const result = await axios.get("http://localhost:5000/get");
+      const result = await axios.get("https://library-management-backend-one.vercel.app/get");
       setData(result.data);
       // console.log(result.data)
   } catch (error) {
@@ -78,7 +83,7 @@ export default function Home() {
 
       var user_id = S.id;
       console.log(book_id);
-      axios.post("http://localhost:5000/addtocart",{
+      axios.post("https://library-management-backend-one.vercel.app/addtocart",{
                   user_id : user_id,
                   book_id : book_id,
   
@@ -101,8 +106,7 @@ export default function Home() {
    
 
   }
-  
-
+ 
 
   const getCartDetails = async ()=>{
 
@@ -110,7 +114,7 @@ export default function Home() {
 
       try {
 
-        const result = await axios.get("http://localhost:5000/getcartdetails2",{
+        const result = await axios.get("https://library-management-backend-one.vercel.app/getcartdetails2",{
         params: {
         user_id : S.id
         }
@@ -128,13 +132,17 @@ export default function Home() {
 
 
   useEffect(() => {
+    setTimeout(()=>{
+      setLoading(false)
+    },1400)
     loadData();
     getCartDetails();
   }, []);
 
-
-
-  return (
+  if(loading){
+    return <Preloader/>
+  }
+  else return (
     <div>
       <div style={{
       margin: 'auto',
@@ -192,11 +200,13 @@ export default function Home() {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+            <input placeholder='Enter item to search.....' type="text" className='search'  onChange={(e)=>{setquery(e.target.value)}} value={query} />
+           
                 <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
                   
                 <li class="nav-item">
                         <a class="nav-link active" aria-current="page" onClick={()=>{
-                          navigate(`/${S.id}`)
+                          navigate(`/home/${S.id}`)
                         }} >Home</a>
                     </li>
 
@@ -223,8 +233,7 @@ export default function Home() {
       </Button> */}
 
     <div class="noti container">
-    <input placeholder='Enter item to search.....' type="text" className='search'  onChange={(e)=>{setquery(e.target.value)}} value={query} />
-    <button class="sbtn button-68" role="button">Search</button>
+   
 
 
 
@@ -248,8 +257,9 @@ export default function Home() {
 
           <div className="row jus">
           <div className="col">
-          <p>Name : {item.book_name}</p>
+          <p>Name : {item.book_name  }</p>
           <p>Author : {item.author_name}</p>
+        
           </div>
 
           <div className="col">
@@ -284,10 +294,10 @@ export default function Home() {
       
     </div>
 
-</div>
-                        
-                    )
+</div>            
+      )
                 })
+
 
 //   data.filter((e) => (e.book_name+e.author_name+e.genre).includes(query)).map((e, index) => {
 //   return (
@@ -299,7 +309,6 @@ export default function Home() {
 //     </div>
 //   )
 // })
-
 
             }
 

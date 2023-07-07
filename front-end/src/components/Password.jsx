@@ -15,7 +15,7 @@ function Password() {
 const setfunc= () => {
     console.log(name,mail,image);
 
-    axios.post("http://localhost:5000/auth/signup",{
+    axios.post("https://library-management-backend-one.vercel.app/auth/signup",{
         params: {
         name:name,
         mail:mail,
@@ -24,7 +24,7 @@ const setfunc= () => {
         password:password
         }
       }).then((response) => {
-            navigate("/login")
+            navigate("/")
     }).catch((msg)=>{
         alert("please login again")
         navigate("/signup")
