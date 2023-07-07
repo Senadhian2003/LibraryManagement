@@ -8,12 +8,14 @@ import Login from './components/login';
 import Signup from './components/signup';
 import Password from './components/Password';
 
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        
+      <ToastContainer position='top-center' />
       </div>
       <Routes>
 

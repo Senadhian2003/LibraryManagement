@@ -4,13 +4,15 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import { Link, useParams } from "react-router-dom";
-
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "./cart.css"
 export default function Cart() {
   let S = useParams();
+  const navigate = useNavigate();
   console.log(S.id)
   const [data, setData] = useState([]);
-  
+  let totalPrice = 0;
   const loadData = async()=>{
 
     axios.get("http://localhost:5000/getcartdetails",{
@@ -18,6 +20,7 @@ export default function Cart() {
         user_id : S.id
         }
       }).then((response) => {
+        setData(response.data)
         console.log("GOOD")
        
     }).catch((msg)=>{
@@ -41,15 +44,41 @@ export default function Cart() {
                 
             }).then(()=>{
                 console.log("Goood")
+                toast.success("Book removed from cart");
                 setTimeout(()=>{
-                  loadData();
-              },1000);
+                  console.log("Goood")
+                },1000);
+                
+                loadData()
 
             }).catch((err)=>{
                 console.log(err)
             })
 
   }
+
+  const checkout = ()=>{
+
+    axios.post("http://localhost:5000/checkout",{
+      booksArr : data,
+      user_id : S.id
+  }).then(()=>{
+      console.log("Goood")
+
+      toast.success("Cart checked out successfully");
+        setTimeout(()=>{
+          navigate(`/${S.id}`)
+        },1000);
+
+      
+
+  }).catch((err)=>{
+      console.log(err)
+  })
+    
+
+  }
+
 
   return (
     <div>
@@ -65,10 +94,14 @@ export default function Cart() {
                 <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
                     
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" onClick={()=>{
+                          navigate(`/${S.id}`)
+                        }}>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Cart</a>
+                        <a class="nav-link active" aria-current="page"  onClick={()=>{
+                          navigate(`/cart/${S.id}`)
+                        }}>Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  LOGOUT</a>
@@ -97,6 +130,7 @@ export default function Cart() {
             {
                
                 data.map((item,index)=>{
+                  totalPrice += item.price;
                     return(
                         <tr key={item.id}  >
 
@@ -115,10 +149,24 @@ export default function Cart() {
                     )
                 })
             }
+          <tr>
 
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td></td>
+          <td>{totalPrice}</td>
+          <td></td>
+
+          </tr>
 
       </tbody>
+
+      
     </Table>
+    <div className="dummy1">
+                            <button type="button" onClick={checkout} style={{float : "right"}} class=" btn btn-success  ">Checkout</button></div>
 
     </Container>
    
