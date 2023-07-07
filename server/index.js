@@ -42,7 +42,7 @@ app.post("/addtocart",(req,res)=>{
 
     console.log(user_id, book_id)
 
-    const sqlInsert = "INSERT INTO cart (user_id, book_id) VALUES (?,?)";
+    const sqlInsert = "INSERT INTO Cart (user_id, book_id) VALUES (?,?)";
     db.query(sqlInsert,[user_id, book_id],(error,result)=>{
 
         if(error){

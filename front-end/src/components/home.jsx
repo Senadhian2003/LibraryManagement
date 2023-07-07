@@ -239,7 +239,7 @@ export default function Home() {
 
 {
   
-  data.map((item, index) => {
+  data.filter((e) => (e.book_name+e.author_name+e.genre).includes(query)).map((item, index) => {
       return (
 
                       <div class="box1 " style={{marginTop : "60px"}} >
