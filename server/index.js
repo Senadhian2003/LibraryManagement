@@ -26,9 +26,9 @@ app.get("/",(req,res)=>{
 
 app.get("/get",(req,res)=>{
 
-    const query = "SELECT * FROM books";
+    const query = "SELECT * FROM Books";
     db.query(query, (err,result)=>{
-        // console.log(result);
+        console.log(result);
         res.send(result);
 
     })
@@ -135,6 +135,25 @@ app.post("/deletefromcart",(req,res)=>{
     console.log(user_id, book_id)
 
 })
+
+
+app.post("/filter",(req,res)=>{
+
+    const price = req.body.price;
+    const year = req.body.year;
+
+
+    const query = "SELECT * FROM Books WHERE price BETWEEN ? AND ? AND published_year BETWEEN ? and ?"
+    db.query(query,[price[0],price[1],year[0],year[1]] ,(err,result)=>{
+        console.log(result);
+        res.send(result);
+
+    })
+
+    console.log(price, year)
+
+})
+
 
 
 app.post("/checkout",async(req,res)=>{

@@ -6,13 +6,22 @@ import axios from 'axios';
 import "./home.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 
 export default function Home() {
   let S = useParams();
   const navigate = useNavigate();
-  
-  const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
+  const [price, setPrice] =  useState([0,100]);
+  const [year, setYear] =  useState([1800,2020]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [data, setData] = useState([{}]);
   const[query,setquery] = useState("");
   const [cart, setCart] = useState([]);
   const loadData = async()=>{
@@ -29,6 +38,31 @@ export default function Home() {
 
   }
 
+  const filter = ()=>{
+
+    axios.post("http://localhost:5000/filter",{
+                  price : price,
+                  year : year
+  
+              }).then((response)=>{
+                console.log(response.data)  
+                setData(response.data)
+  
+              }).catch((err)=>{
+                  console.log(err)
+              })
+
+  }
+
+  const rangeSelector = (event, newValue) => {
+    setPrice(newValue);
+    // console.log(newValue)
+  };
+
+  const rangeSelector2 = (event, newValue) => {
+    setYear(newValue);
+    // console.log(newValue)
+  };
 
   const addToCart = (book_id, book_name)=>{
 
@@ -67,6 +101,8 @@ export default function Home() {
    
 
   }
+  
+
 
   const getCartDetails = async ()=>{
 
@@ -100,7 +136,54 @@ export default function Home() {
 
   return (
     <div>
+      <div style={{
+      margin: 'auto',
+      display: 'block',
+      width: 'fit-content'
+    }}></div>
          
+         
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>  <Typography id="range-slider" gutterBottom>
+       Price Range:
+      </Typography>
+       <Slider
+        value={price}
+        onChange={rangeSelector}
+        valueLabelDisplay="auto"
+        min = {0}
+        max = {100}
+      />
+
+<Typography id="range-slider" gutterBottom>
+        Year Range:
+      </Typography>
+       <Slider
+        value={year}
+        onChange={rangeSelector2}
+        valueLabelDisplay="auto"
+        min = {1800}
+        max = {2020}
+      />
+      
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={filter}>
+           Filter
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">LIBRARY MANAGEMENT</a>
@@ -110,25 +193,34 @@ export default function Home() {
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
-                    
-                    <li class="nav-item">
+                  
+                <li class="nav-item">
                         <a class="nav-link active" aria-current="page" onClick={()=>{
                           navigate(`/${S.id}`)
                         }} >Home</a>
                     </li>
+
+
+                <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" onClick={handleShow} > Filter</a>
+                    </li>
+
+                  
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" onClick={()=>{
                           navigate(`/cart/${S.id}`)
                         }}>Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  LOGOUT</a>
+                        <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
+    {/* <Button variant="primary" style={{marginTop : "4%", marginLeft : "5%"}} onClick={handleShow}>
+        Filter Price and year
+      </Button> */}
 
     <div class="noti container">
     <input placeholder='Enter item to search.....' type="text" className='search'  onChange={(e)=>{setquery(e.target.value)}} value={query} />
@@ -138,7 +230,7 @@ export default function Home() {
 
 {
   
-  data.filter((e) => (e.book_name+e.author_name+e.genre).includes(query)).map((item, index) => {
+  data.map((item, index) => {
       return (
 
                       <div class="box1 " style={{marginTop : "60px"}} >
