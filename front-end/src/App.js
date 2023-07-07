@@ -10,6 +10,7 @@ import Password from './components/Password';
 
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import preloder from './components/preloder';
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
       </div>
       <Routes>
 
-        <Route path='/login' Component={Login} />
+        <Route index path='/' Component={Login} />
         <Route path='/signup' Component={Signup} />
         <Route path='/password' Component={Password} />
 
 
-        <Route path='/:id' Component={Home} />
+        <Route path='/home/:id' Component={Home} />
         <Route path='/cart/:id' Component={Cart} />
+        <Route path='/loader' Component={preloder}/>
 
       </Routes>
 

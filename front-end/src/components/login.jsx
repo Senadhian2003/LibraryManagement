@@ -22,14 +22,14 @@ function Login() {
   }
   ,[])
    function checklogin(){
-        axios.get("http://localhost:5000/auth/login",{
+        axios.get("https://library-management-backend-one.vercel.app/auth/login",{
         params: {
         mail:mail,
         password:password
         }
       }).then((response) => {
         
-        navigate(`/${response.data}`)
+        navigate(`/home/${response.data}`)
     }).catch((msg)=>{
       alert("Invalid credentials")
     })
@@ -37,15 +37,15 @@ function Login() {
 
   const responseGoogle = (response) => {
     let gid=response.profileObj.googleId
-    axios.get("http://localhost:5000/auth/oauth",{
+    axios.get("https://library-management-backend-one.vercel.app/auth/oauth",{
         params: {
         id:gid
         }
       }).then((response) => {
         
-        navigate(`/${response.data}`)
+        navigate(`/home/${response.data}`)
     }).catch((msg)=>{
-      alert("Invalid credentials")
+       console.log(msg)
     })
   }
   const reject=(msg)=>{

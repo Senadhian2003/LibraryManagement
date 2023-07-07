@@ -7,8 +7,10 @@
     height:45px;
     width: 300px;
     border-radius: 10px;
-    margin-top: 5%;
-    margin-left: 32%;
+    margin-top: 0%;
+    
+   
+
  
 }
 .sbtn{
@@ -16,7 +18,8 @@
     width:100px;
     margin-left: 1%;
     border-radius: 10px;
-    margin-top: 5%;
+    margin-top: -0.2%;
+    margin-right: 16%;
     
 }
 /* CSS */
@@ -109,4 +112,9 @@
   
   .button-68:hover {
     box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
+  }
+  .pr1{
+    margin-top: 1%;
+    margin-right: -10%;
+   
   }
