@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import "./home.css"
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from 'bootstrap';
+
 
 export default function Home() {
   let S = useParams();
