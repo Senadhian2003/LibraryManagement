@@ -22,6 +22,7 @@ export default function Cart() {
       }).then((response) => {
         setData(response.data)
         console.log("GOOD")
+        setData(response.data)
        
     }).catch((msg)=>{
       alert("Invalid credentials")

@@ -7,11 +7,13 @@ import "./home.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 
+
 export default function Home() {
   let S = useParams();
   const navigate = useNavigate();
   
   const [data, setData] = useState([]);
+  const[query,setquery] = useState("");
   const [cart, setCart] = useState([]);
   const loadData = async()=>{
 
@@ -98,7 +100,7 @@ export default function Home() {
 
   return (
     <div>
- 
+         
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">LIBRARY MANAGEMENT</a>
@@ -129,12 +131,15 @@ export default function Home() {
 
 
     <div class="noti container">
+    <input placeholder='Enter item to search.....' type="text" className='search'  onChange={(e)=>{setquery(e.target.value)}} value={query} />
+    <button class="sbtn button-68" role="button">Search</button>
 
 
 
 {
-                data && data.map((item,index)=>{
-                    return(
+  
+  data.filter((e) => (e.book_name+e.author_name+e.genre).includes(query)).map((item, index) => {
+      return (
 
                       <div class="box1 " style={{marginTop : "60px"}} >
 
@@ -158,10 +163,14 @@ export default function Home() {
           <div className="col">
           <p>Genre : {item.genre}</p>
           <p>Year : {item.published_year}</p>
+          {/* <button type="button" onClick={()=>{
+            addToCart(item.book_id);
+          }} class="btncrt btn btn-primary ">Add to cart</button> */}
           <button type="button" onClick={()=>{
             addToCart(item.book_id, item.book_name);
-          }} class="btncrt btn btn-primary ">Add to cart</button>
+          }} class="btncrt btn btn-primary button-29" role="button">Add to cart</button>
           </div>
+
 
           
 
@@ -187,6 +196,19 @@ export default function Home() {
                         
                     )
                 })
+
+//   data.filter((e) => (e.book_name+e.author_name+e.genre).includes(query)).map((e, index) => {
+//   return (
+   
+//     <div key={index}>
+//       {console.log(e)}
+//       <p>{e.author_name}</p>
+//       {/* Additional JSX code for rendering the item */}
+//     </div>
+//   )
+// })
+
+
             }
 
 
