@@ -23,7 +23,7 @@ function App() {
 
 
         <Route path='/:id' Component={Home} />
-        <Route path='/cart' Component={Cart} />
+        <Route path='/cart/:id' Component={Cart} />
 
       </Routes>
 

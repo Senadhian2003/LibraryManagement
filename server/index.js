@@ -9,9 +9,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
 
-app.get("/get",(req,res)=>{
-    res.send("Goood");
-}) 
 
 app.use('/auth',auth);
 
@@ -62,7 +59,8 @@ app.post("/addtocart",(req,res)=>{
 
 app.get("/getcartdetails",(req,res)=>{
 
-    var user_id = 1001;
+    var user_id = req.query.user_id;
+    console.log(user_id)
 
     const query = "SELECT Books.book_id, Books.book_name, Books.author_name, Books.genre, Books.price, Books.published_year from Cart join Books on Cart.book_id = Books.book_id where Cart.user_id= ?"
 

@@ -4,21 +4,25 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Cart() {
-
+  let S = useParams();
+  console.log(S.id)
   const [data, setData] = useState([]);
   
   const loadData = async()=>{
 
-    try {
-      const result = await axios.get("http://localhost:5000/getcartdetails");
-      setData(result.data);
-  console.log(result.data)
-  } catch (error) {
-      console.log("Error : "+ error)
-  }
+    axios.get("http://localhost:5000/getcartdetails",{
+        params: {
+        user_id : S.id
+        }
+      }).then((response) => {
+        console.log("GOOD")
+       
+    }).catch((msg)=>{
+      alert("Invalid credentials")
+    })
   
 
   }
@@ -28,7 +32,7 @@ export default function Cart() {
   }, []);
 
   const deleteBook = (book_id)=>{
-    var user_id=1001;
+    var user_id=S.id;
     console.log(book_id);
 
     axios.post("http://localhost:5000/deletefromcart",{

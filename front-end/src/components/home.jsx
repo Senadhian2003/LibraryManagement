@@ -4,7 +4,53 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import "./home.css"
+import { Link, useNavigate } from 'react-router-dom';
+
 export default function Home() {
+  let S = useParams();
+  const navigate = useNavigate();
+  
+  const [data, setData] = useState([]);
+  const loadData = async()=>{
+
+    try {
+      const result = await axios.get("http://localhost:5000/get");
+      setData(result.data);
+  console.log(result.data)
+  } catch (error) {
+      console.log("Error : "+ error)
+  }
+
+
+
+  }
+
+
+  const addToCart = (book_id)=>{
+
+    var user_id = S.id;
+    console.log(book_id);
+    axios.post("http://localhost:5000/addtocart",{
+                user_id : user_id,
+                book_id : book_id,
+
+            }).then(()=>{
+                console.log("Goood")
+
+            }).catch((err)=>{
+                console.log(err)
+            })
+
+
+  }
+
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+
+
   return (
     <div>
  
@@ -22,7 +68,9 @@ export default function Home() {
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/cart">Cart</a>
+                        <a class="nav-link active" aria-current="page" onClick={()=>{
+                          navigate(`/cart/${S.id}`)
+                        }}>Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><img src="30.png" alt=""/>  LOGOUT</a>
@@ -38,7 +86,7 @@ export default function Home() {
 
 
 {
-                data.map((item,index)=>{
+                data && data.map((item,index)=>{
                     return(
 
                       <div class="box1 " style={{marginTop : "60px"}} >
@@ -72,7 +120,7 @@ export default function Home() {
 
           <div className="col">
           <p>Quantity : {item.quantity}</p>
-          <p>Price : $10</p>
+          <p>Price : {item.price}</p>
           </div>
           
 
